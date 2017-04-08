@@ -1,0 +1,29 @@
+
+@import "./common.scss";
+
+.fl{
+  float: left;
+}
+.h100p{
+  height: 100%;
+}
+.mr5{
+  margin-right:5px;
+}
+%icon{
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+.icon-unfinished{
+  @extend %icon;
+  background-color: $grey;
+}
+.icon-ing{
+  @extend %icon;
+  background-color: $dark-blue;
+}
+.icon-finished{
+  @extend %icon;
+  background-color: $success;
+}

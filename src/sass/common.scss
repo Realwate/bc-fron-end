@@ -1,0 +1,25 @@
+
+$dark-blue:#1D8CE0;
+$blue:#20A0FF;
+$light-blue:#58B7FF;
+$black:#1F2D3D;
+$light-black:#324057;
+$xlight-black:#475669;
+$grey:#D3DCE6;
+$light-grey:#E5E9F2;
+$xlight-grey:#EFF2F7;
+$success:#13CE66;
+$warning:#F7BA2A;
+$danger:#FF4949;
+
+
+
+@mixin clearfix{
+  &::before,&::after{
+    content:" ";
+    display: table;
+  }
+  &::after{
+    clear: both;
+  }
+}
