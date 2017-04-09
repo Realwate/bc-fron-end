@@ -49,7 +49,7 @@
     flex:1;
     background-color: #fff;
     display: flex;
-    padding:5px;
+    padding:10px;
     overflow: auto;
   }
 </style>

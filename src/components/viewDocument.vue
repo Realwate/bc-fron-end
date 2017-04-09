@@ -18,8 +18,21 @@
             暂无相关文档，请先添加！
           </div>
 
+          <div class="upload-prototype-img">
+            <div class="desc">
+              原型图
+            </div>
 
-          <el-button style="margin-left: 10px;" size="middle" icon="plus" type="primary">添加</el-button>
+            <el-upload
+              class="upload-demo"
+              action="//jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :file-list="fileList">
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+          </div>
 
         </div>
       </div>
@@ -35,7 +48,23 @@
       return {
         isLoading:true,
           nodeLabel:"",
-         document:{}
+         document:{},
+        fileList:[]
+
+      }
+    },
+    methods:{
+      handleRemove(file, fileList) {
+        console.log("remove",file, fileList);
+      },
+      handlePreview(file) {
+        console.log("preview",file);
+      },
+      handleChange(file, fileList) {
+        console.log("change",file,fileList)
+      },
+      submitUpload(){
+
       }
     },
     created(){
@@ -77,9 +106,16 @@
     padding: 20px;
      @include common-box-shadow();
 
+  .upload-img{
+    width: 500px;
+    border:1px solid #333;
+  }
     .prompt{
       margin-bottom: 20px;
       font-size: 18px;
+    }
+    .desc{
+      margin-bottom: 20px;
     }
   }
 </style>

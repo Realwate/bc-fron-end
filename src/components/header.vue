@@ -1,7 +1,7 @@
 <template>
 <div>
   <header>
-    <h1>业务合并</h1>
+    <h1 @click="backHome">业务合并</h1>
     <p>(Business Consolidation:BC)</p>
     <!--<span @click="hidden">-->
       <!--<i :class="[isShow?'el-icon-d-arrow-left':'el-icon-d-arrow-right']" class="icon-toggle" ></i>-->
@@ -14,10 +14,11 @@
 
   export default {
       methods:{
-          hidden(){
-
-              this.$emit("click");
-          }
+        backHome(){
+            this.$router.push({
+                path:"/main"
+            })
+        }
       },
     props:["isShow"]
   }
@@ -32,6 +33,11 @@
     height: $app-header-height;
     h1{
       font-weight:normal;
+      display: inline-block;
+      cursor: pointer;
+    }
+    p{
+      margin:0;
     }
     .icon-toggle{
       position: absolute;

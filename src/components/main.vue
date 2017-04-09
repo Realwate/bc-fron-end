@@ -444,6 +444,7 @@
       flag2Class:formatUtil.flag2Class
 
     },
+
       components:{
         treeNode,
         iconDesc

@@ -1,6 +1,6 @@
 <template>
     <aside :style="styleObj">
-      <el-menu router @select="menuSelect" default-active="/main/product/1" class="el-menu-vertical-demo">
+      <el-menu router @select="menuSelect" :default-active="defaultActive" class="el-menu-vertical-demo">
         <el-submenu index="product">
           <template slot="title">产品形态</template>
           <el-menu-item index="/main/product/1">动态建模平台</el-menu-item>
@@ -23,9 +23,14 @@
 
     data(){
         return {
-
         }
     },
+    computed:{
+      defaultActive(){
+          return this.$store.state.defaultActive;
+      }
+    },
+
     created(){
         //默认productId = 1
       this.$store.dispatch("changeProductId",1);

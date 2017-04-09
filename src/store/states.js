@@ -1,5 +1,6 @@
 
 
 export default {
-  currentProductId:null
+  currentProductId:null,
+  defaultActive:"/main/product/1"
 }

@@ -8,6 +8,7 @@ import mainProcess from '@/components/mainProcess'
 import testSystem from '@/components/testSystem'
 import viewDocument from '@/components/viewDocument'
 
+import store from "@/store"
 
 Vue.use(Router)
 
@@ -44,7 +45,14 @@ let routes = [
   },
 ]
 
-export default new Router({
+const router = new Router({
   routes,
   mode:"history"
+});
+
+router.beforeEach((to, from, next) => {
+  store.dispatch("changeDefaultActive",to.path);
+  next(true) ;
 })
+
+export default router
