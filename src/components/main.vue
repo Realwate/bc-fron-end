@@ -1,5 +1,6 @@
 <template>
-<div class="w">
+<div class="w"  v-loading="isLoading"
+     element-loading-text="拼命加载中">
   <aside class="main-aside">
     <el-tree
       class="tree"
@@ -12,7 +13,6 @@
       :indent="8"
       :expand-on-click-node="false"
       :render-content="renderContent"
-      @node-click="nodeClick"
     >
     </el-tree>
   </aside>
@@ -31,7 +31,13 @@
       </el-table-column>
       <el-table-column
         label="二级节点"
+        width="150px"
         prop="secondLevelNode.label">
+        <template scope="scope">
+          <router-link :to= "'/document/'+scope.row.nodeinfo.documentid">
+            {{scope.row.secondLevelNode.label}}
+          </router-link>
+        </template>
       </el-table-column>
       <el-table-column
         label="需求完成"
@@ -59,15 +65,12 @@
         prop="nodeinfo.boss">
       </el-table-column>
       <el-table-column label="操作"
-      width="150px">
+       align="center">
         <template scope="scope">
           <el-button
             size="small"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            @click="deleteNodeInfo(scope.$index, scope.row)">删除</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -161,6 +164,7 @@
   export default {
     data(){
       return {
+        isLoading:true,
         tableData:  [],
         nodeInfo:[],
         realTreeDataRef:new Map(),
@@ -172,16 +176,15 @@
     },
     mounted(){
         if(this.currentProductId) {
-            //获取node信息//获取node信息
 
-          Promise.all([api.getNodeByProductId(this.currentProductId),api.getAllNodeInfo()])
-            .then(([{data:nodeData},{data:nodeInfoData}]) => {
-
-              this.updateTreeData(nodeData.data);
-
-              if(!nodeInfoData.error){
-                this.nodeInfo = nodeInfoData.data;
-              }
+            //获取node信息 nodeinfo
+          api.getNodeByProductId(this.currentProductId)
+            .then(({data:msg}) => {
+              let nodeData = msg.data.node;
+              let nodeInfoData = msg.data.nodeInfo;
+              this.updateTreeData(nodeData);
+              this.nodeInfo = nodeInfoData;
+              this.isLoading = false;
               console.log("NODE初始化完成")
 
               //初始获取node ->改变Tree内部数据
@@ -202,11 +205,14 @@
           return this.$store.state.currentProductId;
       }
     },
-    watch: { //productId发生变化则 更新数据
+    watch: { //productId发生变化则 更新node
       currentProductId(newId){
-        api.getNodeByProductId(newId)
-          .then(({data}) => {
-            this.updateTreeData(data.data);
+         api.getNodeByProductId(newId)
+          .then(({data:msg}) => {
+              let nodeData = msg.data.node;
+              let nodeInfoData = msg.data.nodeInfo;
+            this.updateTreeData(nodeData);
+            this.nodeInfo = nodeInfoData;
           })
       },
       nodeInfo(newInfo){
@@ -219,7 +225,7 @@
       updateTableData(newInfo){
             this.$nextTick(()=>{
             newInfo = newInfo || this.nodeInfo;
-          if (!newInfo|| newInfo.length == 0 || this.realTreeDataRef.size == 0) {
+          if (!newInfo|| newInfo.length == 0 || this.realTreeDataRef.size <=1) {
               this.tableData = [];
             return;
           }
@@ -267,9 +273,6 @@
           }];
 
         },
-      nodeClick(){//点击一个节点
-
-      },
       addHandle(store, data) {//data父节点数据
         store.append({
             localId: id++,
@@ -448,7 +451,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   @import "../sass/common.scss";
   .w{
     flex-basis: 100%;
@@ -465,5 +468,13 @@
   .main-content{
     flex: 1;
     padding: 10px;
+
+    a{
+      color: $dark-blue;
+      text-decoration: none;
+      &:hover{
+         text-decoration:underline;
+       }
+    }
   }
 </style>

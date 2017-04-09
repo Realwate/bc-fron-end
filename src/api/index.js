@@ -41,28 +41,33 @@ axios.defaults.baseURL = authAxios.defaults.baseURL = config.baseUrl;
 export default{
   getAllProducts(){
     //return axios.put("/api/user",{id:1,name:"das"});
-    return axios.get("/api/product");
+    return axios.get("/product");
   },
 
   /* node */
  getNodeByProductId(productId){
-    return axios.get(`/api/node?productId=${productId}`)
+    return axios.get(`/node?productId=${productId}`)
  },
   addNode(node){
-    return axios.post("/api/node",node);
+    return axios.post("/node",node);
   },
   updateNode(node){
-    return axios.put("/api/node",node);
+    return axios.put("/node",node);
   },
   deleteNode(nodeId){
-    return axios.delete(`/api/node/${nodeId}`)
+    return axios.delete(`/node/${nodeId}`)
   },
 
   /* nodeInfo */
   updateNodeInfo(nodeInfo){
-    return axios.put("/api/nodeInfo",nodeInfo);
+    return axios.put("/nodeInfo",nodeInfo);
   },
   getAllNodeInfo(){
-    return axios.get("/api/nodeInfo");
+    return axios.get("/nodeInfo");
   },
+
+  /* document */
+  getDocumentById(documentId){
+    return axios.get(`/document/${documentId}`);
+  }
 }

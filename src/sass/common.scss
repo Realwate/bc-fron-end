@@ -12,9 +12,9 @@ $success:#13CE66;
 $warning:#F7BA2A;
 $danger:#FF4949;
 
+$app-header-height:120px;
 
-
-@mixin clearfix{
+@mixin clearfix(){
   &::before,&::after{
     content:" ";
     display: table;
@@ -22,4 +22,8 @@ $danger:#FF4949;
   &::after{
     clear: both;
   }
+}
+
+@mixin common-box-shadow(){
+  box-shadow: 3px 3px 10px 0#999898;
 }

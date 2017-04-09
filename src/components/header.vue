@@ -3,9 +3,9 @@
   <header>
     <h1>业务合并</h1>
     <p>(Business Consolidation:BC)</p>
-    <span @click="hidden">
-      <i :class="[isShow?'el-icon-d-arrow-left':'el-icon-d-arrow-right']" class="icon-toggle" ></i>
-    </span>
+    <!--<span @click="hidden">-->
+      <!--<i :class="[isShow?'el-icon-d-arrow-left':'el-icon-d-arrow-right']" class="icon-toggle" ></i>-->
+    <!--</span>-->
   </header>
 </div>
 </template>
@@ -29,7 +29,7 @@
     @include clearfix();
     position: relative;
     text-align: center;
-    height: 120px;
+    height: $app-header-height;
     h1{
       font-weight:normal;
     }
