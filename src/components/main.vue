@@ -470,12 +470,8 @@
     flex: 1;
     padding: 10px;
 
-    a{
-      color: $dark-blue;
-      text-decoration: none;
-      &:hover{
-         text-decoration:underline;
-       }
+   a{
+    @extend %common-a;
     }
   }
 </style>

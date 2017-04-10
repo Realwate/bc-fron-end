@@ -39,6 +39,9 @@ axios.defaults.baseURL = authAxios.defaults.baseURL = config.baseUrl;
 
 
 export default{
+  uploadFileURL(documentId,type){
+    return config.baseUrl+`/document/${documentId}/file?type=${type}`;
+  },
   getAllProducts(){
     //return axios.put("/api/user",{id:1,name:"das"});
     return axios.get("/product");
@@ -69,5 +72,14 @@ export default{
   /* document */
   getDocumentById(documentId){
     return axios.get(`/document/${documentId}`);
+  },
+  deleteFileById(documentId,fileId){
+    return axios.delete(`/document/${documentId}/file/${fileId}`);
+  },
+  updateDocument(documentId,doc){
+    return axios.put(`/document/${documentId}`,doc);
   }
+
+  /* file */
+
 }

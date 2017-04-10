@@ -6,7 +6,11 @@ import middle from '@/components/middle'
 import mainProduct from '@/components/main'
 import mainProcess from '@/components/mainProcess'
 import testSystem from '@/components/testSystem'
+
+import document from '@/components/document'
 import viewDocument from '@/components/viewDocument'
+import editDocumentDetail from '@/components/editDocument'
+
 
 import store from "@/store"
 
@@ -41,7 +45,17 @@ let routes = [
 
   {
     path: '/document/:documentId',
-    component: viewDocument,
+    component: document,
+    children:[
+      {
+        path:"",
+        component:viewDocument
+      },
+      {
+        path:"edit",
+        component:editDocumentDetail
+      }
+    ]
   },
 ]
 

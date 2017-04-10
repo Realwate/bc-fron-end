@@ -6,4 +6,5 @@ export default{
   CHANGE_DEFAULT_ACTIVE(state,value){
     state.defaultActive = value;
   },
+
 }

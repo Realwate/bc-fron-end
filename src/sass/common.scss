@@ -27,3 +27,10 @@ $app-header-height:120px;
 @mixin common-box-shadow(){
   box-shadow: 3px 3px 10px 0#999898;
 }
+%common-a{
+  color: $dark-blue;
+  text-decoration: none;
+  &:hover{
+    text-decoration:underline;
+  }
+}

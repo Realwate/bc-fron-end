@@ -26,18 +26,16 @@
 </template>
 
 <script>
-
+  import businessData from "@/components/mainBusinessData"
   export default {
     data(){
       return {
-          businessData:[
-              {
-              id:"1",
-              process:"登录主界面",
-              role:"角色",
-              achivePercent:"80%",
-          }
-          ]
+          businessData:[{
+            id:"1",
+            process:"登录主界面",
+            role:"角色",
+            achivePercent:"80%",
+          },]
       }
     },
   }
