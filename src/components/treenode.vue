@@ -61,7 +61,7 @@
   .node-ops{
     display: inline-block;
     position: absolute;
-    right: -85px;
+    right: -105px;
   }
   .node-label{
     display: inline-block;
@@ -74,8 +74,8 @@
       bottom: 0;
       right: 0;
       width: 100%;
+      height: 100%;
       box-sizing: border-box;
-      /*border:none;*/
       outline: none;
     }
   }

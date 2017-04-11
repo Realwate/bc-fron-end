@@ -1,14 +1,13 @@
 <template>
 <div class="w"  v-loading="isLoading"
      element-loading-text="拼命加载中">
-  <aside class="main-aside">
+  <aside class="main-aside" :class="{'aside-hidden':asideIsHidden}">  <!--  main-侧边栏  -->
     <el-tree
       class="tree"
       :data="treeData"
       :props="{children: 'children',label: 'label'}"
       node-key="localId"
-      accordion
-      default-expand-all
+
       highlight-current
       :indent="8"
       :expand-on-click-node="false"
@@ -20,10 +19,13 @@
     <el-table
       :data="tableData"
       border
+      :default-sort = "{prop: 'module.label', order: 'descending'}"
       stripe>
       <el-table-column
         label="模块"
-        prop="module.label">
+        prop="module.label"
+        sortable
+      >
       </el-table-column>
       <el-table-column
         label="一级节点"
@@ -172,6 +174,7 @@
         currentRow:{},
         toUpdateRow:{},
         treeData:[],
+        asideIsHidden:false
       }
     },
     mounted(){
@@ -405,8 +408,6 @@
           developflag:this.toUpdateRow.developflag,
           testflag:this.toUpdateRow.testflag,
         }
-//        console.log(nodeInfo);
-        //通过Id更新nodeInfo
 
         api.updateNodeInfo(nodeInfo)
           .then(({data})=>{
@@ -428,21 +429,7 @@
         this.changeUpdateRow(row);
         this.dialogVisible = true;
       },
-//      deleteNodeInfo(index, row) {
-//          Msg.confirm("确认删除吗?").then(()=>{
-//              //删除node 后台判断
-//            api.deleteNode(row.nodeinfo.nodeid)
-//              .then(({data})=>{
-//                  //同步本地数据
-//                //表格
-//                  this.tableData.splice(index,1);
-//
-//              })
-//
-//          })
-//      },
       flag2Class:formatUtil.flag2Class
-
     },
 
       components:{
@@ -458,13 +445,24 @@
     flex-basis: 100%;
   }
   .tree{
-    height: 100%;
-    max-width: 260px;
+    min-height: 100%;
+    max-width: 280px;
     box-sizing: border-box;
   }
 
   .main-aside{
-    flex:0 0 260px;
+    flex:0 0 280px;
+    position: relative;
+    transition:all .8s cubic-bezier(.71,-0.42,.1,1.19) ;
+  }
+  .aside-hidden{
+    margin-left:-290px;
+  }
+  .icon-slide{
+    position: absolute;
+    right: -30px;
+    bottom: 0;
+    cursor: pointer;
   }
   .main-content{
     flex: 1;

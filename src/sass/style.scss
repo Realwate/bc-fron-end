@@ -1,6 +1,7 @@
 
 @import "./common.scss";
 
+
 %icon{
   width: 10px;
   height: 10px;
@@ -54,4 +55,48 @@ a.btn{
 }
 .bg-green{
   background-color: $danger;
+}
+
+.upload-box{
+  text-align: center;
+  margin-top: 50px;
+}
+.upload-component{
+  width: 360px;
+  height: 180px;
+  display: inline-block;
+}
+
+.imgs-show{
+  @include clearfix();
+  margin-top:20px;
+  ul{
+    display: flex;
+    padding:0;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+  }
+  .img-item{
+    @include clearfix();
+    flex:0 0 auto;
+
+    box-sizing: border-box;
+    width: 80%;
+    text-align:center;
+    margin-bottom:30px;
+    padding: 20px;
+    border:1px dashed #ccc;
+    .img-info{
+      margin-top: 10px;
+      font-weight:bold;
+      font-size:18px;
+    }
+    img{
+      width: 100%;
+      &:hover{
+        box-shadow: 0px 0px 20px 0px $light-blue;
+      }
+    }
+  }
 }

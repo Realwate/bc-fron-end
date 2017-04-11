@@ -1,7 +1,7 @@
 <template>
   <div class="w">
 
-    <v-sidebar :styleObj="styleObj"></v-sidebar>
+    <v-sidebar></v-sidebar>
 
     <div class="main">
       <router-view></router-view>

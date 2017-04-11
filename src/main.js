@@ -10,6 +10,17 @@ import 'element-ui/lib/theme-default/index.css'
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
+
+import config from "@/config"
+Vue.filter('addBaseUrl', function (path) {
+  return config.baseUrl+path;
+})
+
+Vue.filter('imgNameFilter', function (fullName) {
+  return fullName.substr(0,fullName.indexOf('.'));
+})
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

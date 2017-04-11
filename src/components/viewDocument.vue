@@ -1,26 +1,8 @@
 <template>
   <div v-loading="isLoading"
        element-loading-text="拼命加载中">
-          <div class="doc-desc">
-            <h3>
-              描述
-              <el-button @click="editDescription" class="fr" size="small">编辑</el-button>
-            </h3>
 
-            <el-form v-if="isEditing" ref="form" :model="toUpdateDocument" label-width="80px">
-              <el-form-item label="修改描述">
-                <el-input :rows="5" type="textarea" v-model="toUpdateDocument.overview"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" :loading="submitLoading" @click="updateDocument">提交</el-button>
-                <el-button @click="isEditing=false">取消</el-button>
-              </el-form-item>
-            </el-form>
-            <pre v-else>{{document.overview}}</pre>
-
-          </div>
-
-          <div class="prototype-imgs">
+          <div class="imgs-show">
             <h3>原型图</h3>
             <ul>
               <li class="img-item" v-for="(img,index) in prototypeImgList">
@@ -54,7 +36,7 @@
 
         <div class="middle-footer">
           <div class="detail">
-            <router-link to="/document/a87fb4b26f5e40ada2b3d994f05e89c5/edit">
+            <router-link :to="editUrl">
               详细需求
         </router-link>
       </div>
@@ -73,44 +55,22 @@
   export default {
     data(){
       return {
-        isEditing:false,
         isLoading:true,
         nodeLabel:"",
         document:{},
-        toUpdateDocument:{},
         prototypeImgList:[],
-        detailImgList:[],
-        submitLoading:false
       }
     },
     computed:{
       uploadPrototypeFileURL(){
         return api.uploadFileURL(this.document.id,1);
-      }
-    },
-    filters:{
-      addBaseUrl(path){
-        return config.baseUrl+path;
       },
-      imgNameFilter(fullName){
-        return fullName.substr(0,fullName.indexOf('.'));
+      editUrl(){
+          return `/document/${this.document.id}/edit`
       }
     },
     methods:{
-      updateDocument(){
-        api.updateDocument(this.document.id,this.toUpdateDocument)
-          .then(({data:msg})=>{
-            this.isEditing = false;
-            this.submitLoading = false;
-            this.document.overview = msg.data.overview;
-            this.document.detail = msg.data.detail;
-          })
-        this.submitLoading = true;
-      },
-      editDescription(){
-        this.isEditing = true;
-        this.toUpdateDocument.overview = this.document.overview;
-      },
+
       deleteImg(index,imgId){
         Msg.confirm("确认删除吗?")
           .then(()=>{
@@ -147,7 +107,6 @@
           this.nodeLabel = msg.data.node.label;
           this.document = msg.data.document;
           this.prototypeImgList = msg.data.prototypeImgList;
-          this.detailImgList = msg.data.detailImgList;
         })
     }
   }
@@ -155,48 +114,8 @@
 
 <style scoped lang="scss">
   @import "../sass/common.scss";
-  .prototype-imgs{
-    @include clearfix();
-  margin-top:20px;
-  ul{
-    display: flex;
-    padding:0;
-    justify-content: center;
-    flex-wrap: wrap;
-    list-style: none;
-  }
-  .img-item{
-  @include clearfix();
-    flex:0 0 auto;
 
-    box-sizing: border-box;
-    width: 80%;
-    text-align:center;
-    margin-bottom:30px;
-    padding: 20px;
-    border:1px dashed #ccc;
-    .img-info{
-      margin-top: 10px;
-      font-weight:bold;
-      font-size:18px;
-    }
-  img{
-    width: 100%;
-  &:hover{
-     box-shadow: 0px 0px 20px 0px $light-blue;
-   }
-  }
-  }
-  }
-  .upload-box{
-    text-align: center;
-    margin-top: 50px;
-  }
-  .upload-component{
-    width: 360px;
-    height: 180px;
-    display: inline-block;
-  }
+
 
   .middle-footer{
   @include clearfix();

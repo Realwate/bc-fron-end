@@ -1,5 +1,5 @@
-<template>
-    <aside :style="styleObj">
+<template>  <!-- middle侧边栏 -->
+    <aside>
       <el-menu router @select="menuSelect" :default-active="defaultActive" class="el-menu-vertical-demo">
         <el-submenu index="product">
           <template slot="title">产品形态</template>
@@ -34,10 +34,6 @@
     created(){
         //默认productId = 1
       this.$store.dispatch("changeProductId",1);
-//      api.getNodeByProductId(1)
-//        .then(({data})=>{
-//
-//        })
     },
     methods:{
       menuSelect(index,path){
@@ -49,14 +45,13 @@
           }
       }
     },
-    props:["styleObj"]
   }
 </script>
 
 <style scoped>
   aside{
     flex:0 0 220px;
-    transition:all .3s linear;
+    /*transition:all .3s linear;*/
   }
 
 </style>

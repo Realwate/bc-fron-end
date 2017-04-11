@@ -1,15 +1,18 @@
 <template>
-  <div class="middle-wrapper">
-    <div class="middle" >
-      <div class="middle-top-banner">
-        <h2>{{nodeLabel}}</h2>
-      </div>
+  <div>
+    <div class="middle-wrapper">
+      <div class="middle" >
+        <div class="middle-top-banner">
+          <h2>{{nodeLabel}}</h2>
+        </div>
 
-      <div class="middle-content">
-        <router-view></router-view>
-      </div>
+        <div class="middle-content">
+          <router-view></router-view>
+        </div>
 
+      </div>
     </div>
+    <footer></footer>
   </div>
 </template>
 
