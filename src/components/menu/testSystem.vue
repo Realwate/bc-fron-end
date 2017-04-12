@@ -17,7 +17,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../sass/common.scss";
+  @import "../../sass/common.scss";
 
   .testingSystem{
     flex:1;

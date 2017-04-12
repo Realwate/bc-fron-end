@@ -12,11 +12,11 @@ function flag2label(flag){
 
 function  flag2Class(flag){
   if(flag == 1)
-      return "icon-ing";
+      return "icon bg-blue";
   if(flag == 2)
-      return "icon-finished";
+      return "icon bg-green";
 
-  return "icon-unfinished";
+  return "icon bg-grey";
 
 }
 export default {

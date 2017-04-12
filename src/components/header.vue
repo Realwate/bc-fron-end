@@ -16,7 +16,7 @@
       methods:{
         backHome(){
             this.$router.push({
-                path:"/main"
+                name:"home"
             })
         }
       },

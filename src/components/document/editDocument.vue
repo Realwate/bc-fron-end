@@ -60,7 +60,7 @@
 <script>
   import api from "@/api"
   import config from "@/config"
-  import Msg from "./msg"
+  import Msg from "@/components/msg"
 
   export default {
     data(){

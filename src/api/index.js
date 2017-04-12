@@ -46,8 +46,11 @@ export default{
   updateNodeInfo(nodeInfo){
     return axios.put("/nodeInfo",nodeInfo);
   },
-  getAllNodeInfo(){
-    return axios.get("/nodeInfo");
+  // getAllNodeInfo(){
+  //   return axios.get("/nodeInfo");
+  // },
+  getNodeInfoByProductId(productId){
+    return axios.get(`/nodeInfo?productId=${productId}`);
   },
 
   /* document */

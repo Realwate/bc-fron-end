@@ -49,7 +49,7 @@
 <script>
   import api from "@/api"
   import config from "@/config"
-  import Msg from "./msg"
+  import Msg from "@/components/msg"
 
 
   export default {
@@ -59,6 +59,7 @@
         nodeLabel:"",
         document:{},
         prototypeImgList:[],
+        config
       }
     },
     computed:{
@@ -66,7 +67,7 @@
         return api.uploadFileURL(this.document.id,1);
       },
       editUrl(){
-          return `/document/${this.document.id}/edit`
+          return `${config.rootPath}/document/${this.document.id}/edit`
       }
     },
     methods:{
@@ -113,7 +114,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../sass/common.scss";
+  @import "../../sass/common.scss";
 
 
 

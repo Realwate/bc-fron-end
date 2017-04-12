@@ -2,23 +2,12 @@
 @import "./common.scss";
 
 
-%icon{
+.icon{
   width: 10px;
   height: 10px;
   display: inline-block;
 }
-.icon-unfinished{
-  @extend %icon;
-  background-color: $grey;
-}
-.icon-ing{
-  @extend %icon;
-  background-color: $dark-blue;
-}
-.icon-finished{
-  @extend %icon;
-  background-color: $success;
-}
+
 
 .fl{
   float: left;
@@ -47,14 +36,27 @@ a.btn{
   color: #fff;
 }
 .bg-blue{
-  background-color: $blue;
+  background-color: $dark-blue;
 
 }
+.bg-grey{
+  background-color: $grey;
+}
 .bg-red{
-  background-color: $success;
+  background-color: $danger;
 }
 .bg-green{
-  background-color: $danger;
+  background-color: $success;
+}
+.nav-title {
+  @include common-box-shadow();
+  background-color: #fff;
+  padding: 0 40px;
+  height: 60px;
+  border-left: 5px solid #20A0FF;
+  margin-bottom: 20px;
+  line-height: 60px;
+  margin-top: 0;
 }
 
 .upload-box{

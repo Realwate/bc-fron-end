@@ -1,7 +1,8 @@
 <template>
 <div class="w"  v-loading="isLoading"
      element-loading-text="拼命加载中">
-  <aside class="main-aside" :class="{'aside-hidden':asideIsHidden}">  <!--  main-侧边栏  -->
+
+  <aside class="main-aside">  <!--  main-侧边栏  -->
     <el-tree
       class="tree"
       :data="treeData"
@@ -19,7 +20,7 @@
     <el-table
       :data="tableData"
       border
-      :default-sort = "{prop: 'module.label', order: 'descending'}"
+      :default-sort = "{prop: 'module.label', order: 'ascending'}"
       stripe>
       <el-table-column
         label="模块"
@@ -29,6 +30,7 @@
       </el-table-column>
       <el-table-column
         label="一级节点"
+        sortable
         prop="firstLevelNode.label">
       </el-table-column>
       <el-table-column
@@ -36,13 +38,14 @@
         width="150px"
         prop="secondLevelNode.label">
         <template scope="scope">
-          <router-link :to= "'/document/'+scope.row.nodeinfo.documentid">
+          <router-link :to= "config.rootPath+'/document/'+scope.row.nodeinfo.documentid">
             {{scope.row.secondLevelNode.label}}
           </router-link>
         </template>
       </el-table-column>
       <el-table-column
         label="需求完成"
+        sortable
         prop="nodeinfo.requirementflag">
         <template scope="scope">
           <span :class="flag2Class(scope.row.nodeinfo.requirementflag)"></span>
@@ -50,6 +53,7 @@
       </el-table-column>
       <el-table-column
         label="开发完成"
+        sortable
         prop="nodeinfo.developflag">
         <template scope="scope">
           <span :class="flag2Class(scope.row.nodeinfo.developflag)"></span>
@@ -57,6 +61,7 @@
       </el-table-column>
       <el-table-column
         label="测试"
+        sortable
         prop="nodeinfo.testflag">
         <template scope="scope">
           <span :class="flag2Class(scope.row.nodeinfo.testflag)"></span>
@@ -64,6 +69,7 @@
       </el-table-column>
       <el-table-column
         label="负责人"
+        sortable
         prop="nodeinfo.boss">
       </el-table-column>
       <el-table-column label="操作"
@@ -76,10 +82,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <icon-desc></icon-desc>
+    <icon-desc :settings="iconSettings"></icon-desc>
   </div>
   <!-- 模态框 -->
-  <el-dialog title="编辑" v-model="dialogVisible" size="small">
+  <el-dialog :close-on-press-escape="false" :close-on-click-modal="false"
+    title="编辑" v-model="dialogVisible" size="small">
     <el-form ref="form" :model="toUpdateRow" label-width="80px">
       <el-row>
         <el-col :span="10">
@@ -142,7 +149,7 @@
       <el-row style="margin-top: 10px;">
         <el-col :offset="6" :span="19">
           <el-form-item>
-            <el-button type="primary" @click="updateNodeInfo">提交</el-button>
+            <el-button :loading="submitLoading" type="primary" @click="updateNodeInfo">提交</el-button>
             <el-button @click="dialogVisible = false">取消</el-button>
           </el-form-item>
         </el-col>
@@ -156,9 +163,10 @@
 <script>
   import treeNode from "./treenode"
   import iconDesc from "@/components/icondesc"
-  import Msg from "./msg"
+  import Msg from "@/components/msg"
   import api from "@/api"
   import {mapState} from "vuex"
+import config from '@/config'
 
   import formatUtil from "@/util/format"
 
@@ -166,7 +174,14 @@
   export default {
     data(){
       return {
+        submitLoading:false,
         isLoading:true,
+        config,
+        iconSettings:[
+          {classNames:["bg-grey"],label:"未开始"},
+          {classNames:["bg-blue"],label:"进行中"},
+          {classNames:["bg-green"],label:"完成"},
+        ],
         tableData:  [],
         nodeInfo:[],
         realTreeDataRef:new Map(),
@@ -174,7 +189,6 @@
         currentRow:{},
         toUpdateRow:{},
         treeData:[],
-        asideIsHidden:false
       }
     },
     mounted(){
@@ -185,7 +199,10 @@
             .then(({data:msg}) => {
               let nodeData = msg.data.node;
               let nodeInfoData = msg.data.nodeInfo;
+
+              //更新 treedata 不会立刻渲染界面 所以map不变化
               this.updateTreeData(nodeData);
+              //nodeinfo 变化 更新tableData 会调用map
               this.nodeInfo = nodeInfoData;
               this.isLoading = false;
               console.log("NODE初始化完成")
@@ -208,6 +225,10 @@
           return this.$store.state.currentProductId;
       }
     },
+    created(){
+        let productId = this.$route.params.id;
+      this.$store.dispatch("changeProductId",productId);
+    },
     watch: { //productId发生变化则 更新node
       currentProductId(newId){
          api.getNodeByProductId(newId)
@@ -224,9 +245,21 @@
       }
     },
     methods: {
-     //更新tableData 当数据 nodeinfo变化时
+        //更新本地nodeInfo数据
+        updateLocalNodeInfo(){
+          api.getNodeInfoByProductId(this.currentProductId)
+            .then(({data})=>{
+              this.submitLoading = false;
+              this.dialogVisible=false;
+
+              this.nodeInfo = data.data;
+              Msg.alertSuccess("更新成功")
+            });
+        },
+     //当数据 nodeinfo变化时 更新tableData
       updateTableData(newInfo){
             this.$nextTick(()=>{
+//            setTimeout(()=>{
             newInfo = newInfo || this.nodeInfo;
           if (!newInfo|| newInfo.length == 0 || this.realTreeDataRef.size <=1) {
               this.tableData = [];
@@ -252,7 +285,7 @@
           }
           console.log("tableData更新", data)
           this.tableData = data;
-        })
+        });
       },
       flag2label:formatUtil.flag2label,
       changeUpdateRow(newRow){//点击编辑更新toUpdateRow
@@ -321,13 +354,9 @@
                           .then(({data:msg}) => {
                             if (!msg.error) {
                               this.remove(store, data);
-                              //删除一个结点重新获取数据
 
-                              api.getAllNodeInfo()
-                                .then(({data:allNodeInfo}) => {
-                                  this.nodeInfo = allNodeInfo.data;
-                                  console.log("获取全部nodeInfo",this.nodeInfo );
-                                })
+                              //删除一个结点重新获取数据
+                              this.updateLocalNodeInfo();
                             }
                           });
                       });
@@ -356,20 +385,17 @@
                           data.label = msg.data.label;
                           data.id = msg.data.id;
                           data.isNew = false;
+
                           //再次获取全部节点
-                          api.getAllNodeInfo()
-                            .then(({data})=>{
-                              this.nodeInfo = data.data;
-                              Msg.alertSuccess("更新成功")
-                            });
+                          this.updateLocalNodeInfo();
 
                         }
                         else{
                           Msg.alertError(msg.error.msg);
                         }
 
-                      }).catch(
-                      (e)=> Msg.alertError(e.message)
+                      }).catch((e)=>
+                      console.error(e.message)
                     );
                   }
                   else{
@@ -408,18 +434,13 @@
           developflag:this.toUpdateRow.developflag,
           testflag:this.toUpdateRow.testflag,
         }
-
+        this.submitLoading = true;
         api.updateNodeInfo(nodeInfo)
           .then(({data})=>{
             if(!data.error){
 
               //更新后如何增量同步？
-              api.getAllNodeInfo()
-                .then(({data:msg})=>{
-                  this.dialogVisible=false;
-                  this.nodeInfo = msg.data;
-                  Msg.alertSuccess("更新成功!");
-                })
+              this.updateLocalNodeInfo();
 
             }
           })
@@ -440,9 +461,12 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../sass/common.scss";
+  @import "../../sass/common.scss";
   .w{
-    flex-basis: 100%;
+    display: flex;
+    background-color: #fff;
+    flex-wrap: wrap;
+    min-height: 400px;
   }
   .tree{
     min-height: 100%;
@@ -455,21 +479,12 @@
     position: relative;
     transition:all .8s cubic-bezier(.71,-0.42,.1,1.19) ;
   }
-  .aside-hidden{
-    margin-left:-290px;
-  }
-  .icon-slide{
-    position: absolute;
-    right: -30px;
-    bottom: 0;
-    cursor: pointer;
-  }
   .main-content{
     flex: 1;
-    padding: 10px;
+    margin-left:15px;
 
-   a{
-    @extend %common-a;
-    }
+  }
+  a{
+  @extend %common-a;
   }
 </style>

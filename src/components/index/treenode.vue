@@ -1,21 +1,21 @@
 <template>
 
-  <div class="tree-node">
+  <div class="tree-node" @click="nodeOpsShow=!nodeOpsShow;">
     <div class="node-label">
         <span>
             {{label}}
         </span>
-      <input type="text" ref="content" :value="label" :class="[isEditing?'visible':'hidden']">
+      <input type="text" @keypress.enter="submit" ref="content" :value="label" :class="[isEditing?'visible':'hidden']">
     </div>
-    <span class="node-ops">
+    <span class="node-ops" v-show="nodeOpsShow">
         <template v-if="isEditing" >
-          <el-button size="mini" @click="submit">确认</el-button>
-          <el-button size="mini" @click="cancel">取消</el-button>
+          <el-button size="mini"  @click.stop="submit">确认</el-button>
+          <el-button size="mini" @click.stop="cancel">取消</el-button>
         </template>
        <template v-else >
-                <el-button v-if="!hideAddButton" size="mini" @click="add">添加</el-button>
-                <el-button size="mini" v-if="!hideEditButton" @click="edit">编辑</el-button>
-<el-button size="mini" v-if="!hideDeleteButton" @click="deleteMethod">删除</el-button>
+                <el-button v-if="!hideAddButton" size="mini" @click.stop="add">添加</el-button>
+                <el-button size="mini" v-if="!hideEditButton" @click.stop="edit" >编辑</el-button>
+<el-button size="mini" v-if="!hideDeleteButton" @click.stop="deleteMethod">删除</el-button>
         </template>
       </span>
   </div>
@@ -26,6 +26,7 @@
     data() {
       return {
         isEditing:false,
+        nodeOpsShow:false
     }
     },
     props:["label","hideEditButton","hideAddButton","hideDeleteButton"],
@@ -46,13 +47,20 @@
       },
       edit(){
           this.isEditing = true;
+          /*自动选中*/
+          this.$nextTick(()=>{
+            var input = this.$refs.content;
+            input.focus();
+            input.setSelectionRange(0,input.value.length);
+          })
+
       }
     }
   };
 </script>
 
 <style scoped lang="scss">
-  @import "../sass/common.scss";
+  @import "../../sass/common.scss";
 
   .tree-node{
     display: inline-block;

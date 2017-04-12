@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header @click="hidden" :isShow="isShow"></v-header>
+    <v-header></v-header>
     <router-view>
 
     </router-view>
@@ -21,12 +21,9 @@ export default {
   name: 'app',
   data(){
       return {
-        isShow:true,
-
       }
   },
   methods:{
-  hidden(){}
   },
   components:{
     vHeader,

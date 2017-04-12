@@ -1,20 +1,14 @@
 <template>
   <div class="icon-desc">
-    <div class="icon-group">
-      <span class="icon-unfinished mr5"></span>未开始
-    </div>
-    <div class="icon-group">
-      <span class="icon-ing mr5"></span>进行中
-    </div>
-    <div class="icon-group">
-      <span class="icon-finished mr5"></span>完成
+    <div class="icon-group" v-for="setting in settings">
+      <span class="icon mr5" :class="setting.classNames"></span>{{setting.label}}
     </div>
   </div>
 </template>
 
 <script>
   export default {
-
+      props:["settings"]
   }
 </script>
 

@@ -19,7 +19,7 @@
 <script>
   import api from "@/api"
   import config from "@/config"
-  import Msg from "./msg"
+  import Msg from "@/components/msg"
 
 
   export default {
@@ -43,7 +43,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../sass/common.scss";
+  @import "../../sass/common.scss";
   .middle-wrapper{
     background-color: #f4f4f4;
     padding: 20px 40px 40px;
