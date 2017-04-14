@@ -30,6 +30,7 @@ export default {
     padding: 20px 40px 30px;
   }
   .content{
+    overflow: hidden;
     min-height:400px;
     background: #fff;
     padding: 20px 20px 40px;

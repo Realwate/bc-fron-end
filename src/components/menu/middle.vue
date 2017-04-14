@@ -37,7 +37,7 @@
     flex:1;
     background-color: #fff;
     display: flex;
-    padding:10px;
+    padding:13px;
     overflow: auto;
   }
 </style>

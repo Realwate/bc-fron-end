@@ -2,20 +2,26 @@
 <div class="w"  v-loading="isLoading"
      element-loading-text="拼命加载中">
 
-  <aside class="main-aside">  <!--  main-侧边栏  -->
-    <el-tree
-      class="tree"
-      :data="treeData"
-      :props="{children: 'children',label: 'label'}"
-      node-key="localId"
 
-      highlight-current
-      :indent="8"
-      :expand-on-click-node="false"
-      :render-content="renderContent"
-    >
-    </el-tree>
+  <transition name="slide"
+              leave-active-class="animated bounceOutLeft">
+  <aside class="main-aside" v-if="treeVisible">  <!--  main-侧边栏  -->
+    <div><i class="el-icon-d-arrow-left hide-tree"
+            @click="treeVisible = !treeVisible;" ></i></div>
+      <el-tree
+        class="tree"
+        :data="treeData"
+        :props="{children: 'children',label: 'label'}"
+        node-key="localId"
+        highlight-current
+        :indent="8"
+        :expand-on-click-node="false"
+        :render-content="renderContent"
+      >
+      </el-tree>
+
   </aside>
+  </transition>
   <div class="main-content">
     <el-table
       :data="tableData"
@@ -174,6 +180,7 @@ import config from '@/config'
   export default {
     data(){
       return {
+        treeVisible:true,
         submitLoading:false,
         isLoading:true,
         config,
@@ -468,6 +475,9 @@ import config from '@/config'
     flex-wrap: wrap;
     min-height: 400px;
   }
+  .hide-tree{
+    cursor: pointer;
+  }
   .tree{
     min-height: 100%;
     max-width: 280px;
@@ -477,12 +487,13 @@ import config from '@/config'
   .main-aside{
     flex:0 0 280px;
     position: relative;
-    transition:all .8s cubic-bezier(.71,-0.42,.1,1.19) ;
+    /*transition:all .8s cubic-bezier(.71,-0.42,.1,1.19) ;*/
   }
   .main-content{
+    overflow: hidden;
     flex: 1;
     margin-left:15px;
-
+    transition:all .8s cubic-bezier(.71,-0.42,.1,1.19) ;
   }
   a{
   @extend %common-a;

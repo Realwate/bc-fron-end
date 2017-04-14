@@ -7,17 +7,20 @@
         描述
         <el-button @click="editDescription" class="fr" size="small">编辑</el-button>
       </h3>
-
-      <el-form v-if="isEditing" ref="form" :model="toUpdateDocument" label-width="80px">
-        <el-form-item label="修改描述">
-          <el-input :rows="5" type="textarea" v-model="toUpdateDocument.overview"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" :loading="submitLoading" @click="updateDocument">提交</el-button>
-          <el-button @click="isEditing=false">取消</el-button>
-        </el-form-item>
-      </el-form>
-      <pre v-else>{{document.overview}}</pre>
+      <transition name="desc"
+                  enter-active-class="animated bounceInRight"
+                  leave-active-class="animated bounceOutRight">
+        <el-form v-if="isEditing" ref="form" :model="toUpdateDocument" label-width="80px">
+          <el-form-item label="修改描述">
+            <el-input :rows="5" type="textarea" v-model="toUpdateDocument.overview"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" :loading="submitLoading" @click="updateDocument">提交</el-button>
+            <el-button @click="isEditing=false">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </transition>
+      <pre v-if="!isEditing" >{{document.overview}}</pre>
 
     </div>
 
@@ -134,5 +137,12 @@
 </script>
 
 <style scoped lang="scss">
+.slide-enter,.slide-leave-active{/* 初始状态 和 离开状态 */
+  /*transform: translateX(100%);*/
+  opacity: 0;
+}
+  .slide-enter-active,.slide-leave-active{
+    transition: transform 2.2s ease-in;
+  }
 
  </style>

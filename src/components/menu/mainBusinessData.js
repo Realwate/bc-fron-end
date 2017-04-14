@@ -17,27 +17,180 @@ var businessOverviewData = [
     achivePercent:"80%",
   },
   {
+    id:3,
+    processName:"	多维建模",
+    roles:[1],
+    achivePercent:"80%",
+  },
+  {
+    id:4,
+    processName:"设计各种表单",
+    roles:[1],
+    achivePercent:"80%",
+  },{
+    id:5,
+    processName:"设置规则",
+    roles:[1],
+    achivePercent:"80%",
+  },
+  {
+    id:6,
+    processName:"股权投资数据维护",
+    roles:[2],
+    achivePercent:"80%",
+  },{
+    id:7,
+    processName:"汇率维护",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:8,
+    processName:"创建单体公司采集任务",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:9,
+    processName:"单体公司数据采集",
+    roles:[3],
+    achivePercent:"80%",
+  },
+  {
+    id:10,
+    processName:"	单体公司数据中心",
+    roles:[3],
+    achivePercent:"80%",
+  },
+  {
+    id:11,
+    processName:"外币报表折算",
+    roles:[3],
+    achivePercent:"80%",
+  },
+
+  {
     id:12,
     processName:"内部交易对账",
     roles:[2,3],
     achivePercent:"80%",
-  }
+  },
+  {
+    id:13,
+    processName:"合并方案",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:14,
+    processName:"合并流程定义",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:15,
+    processName:"手工抵销",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:16,
+    processName:"手工调整",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:17,
+    processName:"合并执行监控",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:18,
+    processName:"合并数据中心",
+    roles:[2],
+    achivePercent:"80%",
+  },
+  {
+    id:19,
+    processName:"权限设置",
+    roles:[1],
+    achivePercent:"80%",
+  },
+
+
 ]
 
 
 var businessDetailData = [
   {
-    id:1,
-    step:"",
-    nodeOperations:[{
-      name:"从ERP系统自动采集单体数据",
-      buseness:[
+    businessId:1,
+    processName:"登录主界面",
+    steps:[]
+  },
+  {
+    businessId:2,
+    processName:"建立合并组织体系",
+    steps:[
+      {
+        role:1,
+        nodeOperations:[{
+          nodeName:"-",
+          business:[
+            {
+              businessName:"创建组织体系支持多版本",
+            },
+            {
+              businessName:"合并组织体系支持多版本",
+            }
+          ]
+        }]
+      }
+    ]
+  },
+  {
+    businessId:12,
+    processName:"内部交易对账",
+    steps:[
+      {
+        role:2,
+        nodeOperations:[{
+          nodeName:"单体公司对账",
+          business:[
+            {
+              businessName:"对账执行",
+            },
+            {
+              businessName:"对账报告",
+            },
+            {
+              businessName:"数据调整",
+            }
+          ]
+        }]
+      },
+      {
+        role:3,
+        nodeOperations:[{
+          nodeName:"合并体对账",
+          business:[
+            {
+              businessName:"对账执行",
+            },
+            {
+              businessName:"对账报告",
+            },
+            {
+              businessName:"数据调整",
+            }
+          ]
+        }]
+      }
+    ]
 
-      ]
-    }]
   }
 ]
-export default {
+export  {
   businessOverviewData,
   businessDetailData
 }

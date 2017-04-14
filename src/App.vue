@@ -8,10 +8,8 @@
 </template>
 
 <script>
+  import '@/sass/animate.css'
   import '@/sass/style.scss'
-  import 'nprogress/nprogress.css'
-//  import NProgress from 'nprogress'
-//  NProgress.configure({ showSpinner: false });
 
   import vHeader from './components/header'
 

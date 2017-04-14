@@ -18,12 +18,12 @@
       <router-link :to="{path:`${config.rootPath}/index/product/11?navTitle= 业务合并(Web端)`}" class="btn bg-red">
         业务合并(Web端)
       </router-link>
-      <a  class="btn bg-red">
+      <router-link :to="{path:`${config.rootPath}/index/product/12?navTitle= NC-Web`}" class="btn bg-red">
         NC-Web
-      </a>
-      <a class="btn bg-red">
+      </router-link>
+      <router-link :to="{path:`${config.rootPath}/index/product/13?navTitle= IUAP`}" class="btn bg-red">
         IUAP
-      </a>
+      </router-link>
     </div>
 
     <div class="group">

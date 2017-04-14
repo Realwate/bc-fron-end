@@ -2,15 +2,17 @@
   <div class="businessProcess">
     <el-table
       :data="businessData"
-      border>
+      border
+      stripe>
       <el-table-column
         prop="id"
-        label="#">
+        align="center"
+        label="#"
+      width="130">
       </el-table-column>
       <el-table-column
         prop="processName"
-        label="应用流程"
-        width="180">
+        label="应用流程">
         <template scope="scope">
           <router-link :to="`/BC-backend/index/businessDetail/${scope.row.id}?navTitle=${scope.row.processName}`">
             {{scope.row.processName}}
@@ -21,7 +23,9 @@
         prop="roles"
         label="角色">
         <template scope="scope">
-          <span v-for="role in scope.row.roles">{{role}} </span>
+          <template v-for="role in scope.row.roles">
+            <span v-html="flag2Role(role)"></span>
+          </template>
         </template>
       </el-table-column>
       <el-table-column
@@ -29,17 +33,32 @@
         label="完成率">
       </el-table-column>
     </el-table>
+    <icon-desc :settings="iconSettings"></icon-desc>
   </div>
 </template>
 
 <script>
-  import businessData from "./mainBusinessData"
+  import {businessOverviewData} from "./mainBusinessData"
+  import iconDesc from "@/components/icondesc"
+  import format from "@/util/format"
   export default {
     data(){
       return {
-          businessData:businessData.businessOverviewData
+          businessData:businessOverviewData,
+        iconSettings:[
+            {classNames:["bg-grey"],label:"所有角色"},
+            {classNames:["bg-orange"],label:"管理员"},
+            {classNames:["bg-green"],label:"合并会计"},
+            {classNames:["bg-red"],label:"成员单位报表会计"},
+        ]
       }
     },
+    methods:{
+      flag2Role:format.flag2Role
+    },
+    components:{
+        iconDesc
+    }
   }
 </script>
 
@@ -47,6 +66,7 @@
   @import "../../sass/common.scss";
   .businessProcess{
     flex: 1;
+    overflow: hidden;
   }
   a{
     @extend %common-a;

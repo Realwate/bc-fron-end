@@ -64,6 +64,7 @@
   }
   .middle-content{
     background-color: #fff;
+    overflow: hidden;
     padding: 20px 30px;
      @include common-box-shadow();
   }
