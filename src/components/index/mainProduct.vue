@@ -6,8 +6,11 @@
   <transition name="slide"
               leave-active-class="animated bounceOutLeft">
   <aside class="main-aside" v-if="treeVisible">  <!--  main-侧边栏  -->
-    <div><i class="el-icon-d-arrow-left hide-tree"
-            @click="treeVisible = !treeVisible;" ></i></div>
+    <div>
+      <el-tooltip content="点击隐藏" placement="right">
+        <i @click="treeVisible = !treeVisible;" class="iconfont hide-tree">&#xe640;</i>
+      </el-tooltip>
+    </div>
       <el-tree
         class="tree"
         :data="treeData"
@@ -247,7 +250,7 @@ import config from '@/config'
           })
       },
       nodeInfo(newInfo){
-          console.log("watch nodeInfo变化",newInfo)
+//          console.log("watch nodeInfo变化",newInfo)
         this.updateTableData(newInfo);
       }
     },
@@ -281,7 +284,7 @@ import config from '@/config'
             }
 
             let secondLevel = this.realTreeDataRef.get(info.nodeid);
-            console.log("secondLevel",secondLevel,"nodeinfo",info)
+//            console.log("secondLevel",secondLevel,"nodeinfo",info)
             let obj = {
               nodeinfo: info,
               secondLevelNode: secondLevel.data,
@@ -401,8 +404,10 @@ import config from '@/config'
                           Msg.alertError(msg.error.msg);
                         }
 
-                      }).catch((e)=>
-                      console.error(e.message)
+                      }).catch((e)=> {
+                      console.error(e);
+                      Msg.alertError("网络错误")
+                      }
                     );
                   }
                   else{
@@ -422,7 +427,11 @@ import config from '@/config'
                           Msg.alertError(msg.error.msg);
                         }
 
-                      });
+                      }).catch((e)=> {
+                        console.error(e);
+                        Msg.alertError("网络错误")
+                      }
+                    );;
                   }
 
 
@@ -445,10 +454,8 @@ import config from '@/config'
         api.updateNodeInfo(nodeInfo)
           .then(({data})=>{
             if(!data.error){
-
               //更新后如何增量同步？
               this.updateLocalNodeInfo();
-
             }
           })
       },
@@ -476,8 +483,24 @@ import config from '@/config'
     min-height: 400px;
   }
   .hide-tree{
+    color: #777;
+    font-size: 18px;
     cursor: pointer;
+    display: inline-block;
   }
+  .hide-tree:hover{
+    animation:fadeInSlide .5s ease-out forwards;
+  }
+ @keyframes fadeInSlide {
+   from{
+     transform: translateX(0) ;
+   }
+   to{
+     color: #ccc;
+     transform: translateX(-5px);
+   }
+ }
+
   .tree{
     min-height: 100%;
     max-width: 280px;
@@ -487,7 +510,6 @@ import config from '@/config'
   .main-aside{
     flex:0 0 280px;
     position: relative;
-    /*transition:all .8s cubic-bezier(.71,-0.42,.1,1.19) ;*/
   }
   .main-content{
     overflow: hidden;

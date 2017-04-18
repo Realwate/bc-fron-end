@@ -84,6 +84,7 @@
         .then(({data:msg})=>{
 
           this.isLoading = false;
+          this.document = msg.data.document;
           this.detailImgList = msg.data.detailImgList;
         })
     },
@@ -113,8 +114,10 @@
           .then(()=>{
             api.deleteFileById(this.documentId,imgId)
               .then(({data:msg})=>{
-                Msg.alertSuccess("删除成功")
-                this.detailImgList.splice(index,1);
+                if(!msg.error) {
+                  Msg.alertSuccess("删除成功")
+                  this.detailImgList.splice(index, 1);
+                }
               })
           })
 

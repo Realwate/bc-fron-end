@@ -9,6 +9,7 @@ function flag2label(flag){
     case 1:return "进行中";
     case 2:return "完成";
   }
+  return flag;
 }
 
 function  flag2Class(flag){
@@ -27,15 +28,15 @@ function  flag2Class(flag){
  2合并会计  3成员单位报表会计
  */
 function  flag2Role(flag){
-  if(flag == 0) //all
+  if(flag === 0) //all
     return " <span class='cl-grey'>所有角色</span> ";
-  if(flag == 1)//管理员
+  if(flag === 1)//管理员
     return " <span class='cl-orange'>管理员</span> ";
-  if(flag == 2)//
+  if(flag === 2)//
     return " <span class='cl-green'>合并会计</span> ";
-  if(flag == 3)//
+  if(flag === 3)//
     return " <span class='cl-red'>成员单位报表会计</span> ";
-
+   return flag;
 }
 
 /* 其他的格式转换  */

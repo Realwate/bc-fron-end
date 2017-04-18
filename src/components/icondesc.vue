@@ -16,6 +16,7 @@
   @import "../sass/common.scss";
 
   .icon-desc{
+    margin-top: 5px;
     text-align: right;
     padding:10px 0;
     font-size: 14px;

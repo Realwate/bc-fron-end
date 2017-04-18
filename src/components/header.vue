@@ -3,15 +3,11 @@
   <header>
     <h1 @click="backHome">业务合并</h1>
     <p>(Business Consolidation:BC)</p>
-    <!--<span @click="hidden">-->
-      <!--<i :class="[isShow?'el-icon-d-arrow-left':'el-icon-d-arrow-right']" class="icon-toggle" ></i>-->
-    <!--</span>-->
   </header>
 </div>
 </template>
 
 <script>
-
   export default {
       methods:{
         backHome(){
@@ -19,8 +15,7 @@
                 name:"home"
             })
         }
-      },
-    props:["isShow"]
+      }
   }
 </script>
 
@@ -38,12 +33,6 @@
     }
     p{
       margin:0;
-    }
-    .icon-toggle{
-      position: absolute;
-      left: 10px;
-      bottom: 10px;
-      cursor: pointer;
     }
   }
 </style>

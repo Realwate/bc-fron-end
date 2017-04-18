@@ -14,7 +14,7 @@
         prop="processName"
         label="应用流程">
         <template scope="scope">
-          <router-link :to="`/BC-backend/index/businessDetail/${scope.row.id}?navTitle=${scope.row.processName}`">
+          <router-link :to="`${config.rootPath}/index/businessDetail/${scope.row.id}?navTitle=${scope.row.processName}`">
             {{scope.row.processName}}
           </router-link>
         </template>
@@ -41,9 +41,12 @@
   import {businessOverviewData} from "./mainBusinessData"
   import iconDesc from "@/components/icondesc"
   import format from "@/util/format"
+  import config from "@/config"
+
   export default {
     data(){
       return {
+          config:config,
           businessData:businessOverviewData,
         iconSettings:[
             {classNames:["bg-grey"],label:"所有角色"},

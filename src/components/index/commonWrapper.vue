@@ -27,7 +27,7 @@ export default {
 
   .wrapper{
     background-color: $xlight-grey;
-    padding: 20px 40px 30px;
+    padding: 20px 35px 30px;
   }
   .content{
     overflow: hidden;

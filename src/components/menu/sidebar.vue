@@ -12,7 +12,6 @@
 
 <script>
   import api from "@/api"
-  import { mapState } from 'vuex'
   import config from "@/config"
 
   export default {
@@ -36,7 +35,6 @@
 <style scoped>
   aside{
     flex:0 0 220px;
-    /*transition:all .3s linear;*/
   }
 
 </style>

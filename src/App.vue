@@ -9,6 +9,7 @@
 
 <script>
   import '@/sass/animate.css'
+  import '@/sass/style.css'
   import '@/sass/style.scss'
 
   import vHeader from './components/header'

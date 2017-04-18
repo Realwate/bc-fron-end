@@ -8,114 +8,114 @@ var businessOverviewData = [
     id:1,
     processName:"登录主界面",
     roles:[0],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:2,
     processName:"	建立合并组织体系",
     roles:[1],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:3,
     processName:"	多维建模",
     roles:[1],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:4,
     processName:"设计各种表单",
     roles:[1],
-    achivePercent:"80%",
+    achivePercent:" ",
   },{
     id:5,
     processName:"设置规则",
     roles:[1],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:6,
     processName:"股权投资数据维护",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },{
     id:7,
     processName:"汇率维护",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:8,
     processName:"创建单体公司采集任务",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:9,
     processName:"单体公司数据采集",
     roles:[3],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:10,
     processName:"	单体公司数据中心",
     roles:[3],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:11,
     processName:"外币报表折算",
     roles:[3],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
 
   {
     id:12,
     processName:"内部交易对账",
     roles:[2,3],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:13,
     processName:"合并方案",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:14,
     processName:"合并流程定义",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:15,
     processName:"手工抵销",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:16,
     processName:"手工调整",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:17,
     processName:"合并执行监控",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:18,
     processName:"合并数据中心",
     roles:[2],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
   {
     id:19,
     processName:"权限设置",
     roles:[1],
-    achivePercent:"80%",
+    achivePercent:" ",
   },
 
 
@@ -149,11 +149,242 @@ var businessDetailData = [
     ]
   },
   {
+    businessId:3,
+    processName:"多维建模",
+    steps:[
+      {
+        role:1,
+        nodeOperations:[{
+          nodeName:"-",
+          business:[
+            {
+              businessName:"预置常用维度:审计线索,合并方案,合并科目,度量",
+            },
+            {
+              businessName:"支持用户自定义维度",
+            },
+            {
+              businessName:"维度映射基础档案",
+            },
+            {
+              businessName:"建立合并模型,支持同一套单体数据按法定合并和管理合并",
+            }
+          ]
+        }]
+      }
+    ]
+  },
+  {
+    businessId:4,
+    processName:"设计各种表单",
+    steps:[
+      {
+        role:1,
+        nodeOperations:[{
+          nodeName:"采集表单",
+          business:[
+            {
+              businessName:"设计表单(含计算公式)",
+            },
+            {
+              businessName:"套表管理",
+            }
+          ]
+        },{
+          nodeName:"合并表单",
+          business:[
+            {
+              businessName:"设计合并报表表单(含计算公式)",
+            },
+          ]
+        },{
+          nodeName:"工作底稿",
+          business:[
+            {
+              businessName:"选择显示指标",
+            }
+          ]
+        }]
+      }
+    ]
+  },
+  {
+    businessId:5,
+    processName:"设置规则",
+    steps:[
+      {
+        role:1,
+        nodeOperations:[{
+          nodeName:"-",
+          business:[
+            {
+              businessName:"设置计算规则(已有功能)",
+            },
+            {
+              businessName:"设置审核规则(已有功能)",
+            },
+            {
+              businessName:"设置对账规则",
+            },
+            {
+              businessName:"设置抵销、调整规则",
+            },
+            {
+              businessName:"设置折算规则",
+            }
+          ]
+        }]
+        }]
+      },
+  {
+    businessId:6,
+    processName:"股权投资数据维护",
+    steps:[
+      {
+        role:2,
+        nodeOperations:[{
+          nodeName:"-",
+          business:[
+            {
+              businessName:"按月录入股权投资数据",
+            }
+          ]
+        }]
+      }
+    ]
+  },
+  {
+    businessId:7,
+    processName:"汇率维护",
+    steps:[
+      {
+        role:2,
+        nodeOperations:[{
+          nodeName:"-",
+          business:[
+            {
+              businessName:"录入平均汇率、交易发生日汇率、期末汇率",
+            }
+          ]
+        }]
+      }
+    ]
+  },
+{
+  businessId:8,
+    processName:"创建单体公司采集任务",
+  steps:[
+  {
+    role:2,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"创建单体公司采集任务",
+        }
+      ]
+    }]
+  }
+]
+},
+{
+  businessId:9,
+    processName:"单体公司数据采集",
+  steps:[
+  {
+    role:"",
+    nodeOperations:[{
+      nodeName:"从ERP系统自动采集单体数据",
+      business:[
+        {
+          businessName:"维度匹配规则设置：ERP科目/合并系统科目",
+        },{
+          businessName:"会计期间转换规则",
+        },{
+          businessName:"维度匹配规则设置：辅助核算/维度",
+        },{
+          businessName:"手工导入凭证明细",
+        },{
+          businessName:"手工导入辅助余额表",
+        },{
+          businessName:"后台自动导入明细和辅助余额表",
+        },{
+          businessName:"合并报表项目/科目映射关系设置",
+        },{
+          businessName:"往来账龄转换规则",
+        },{
+          businessName:"往来重分类转换规则",
+        },{
+          businessName:"凭证数据转化为多维数据",
+        }
+      ]
+    },{
+      nodeName:"从报表系统自动采集数据",
+      business:[
+        {
+          businessName:"维度匹配规则设置",
+        },{
+          businessName:"会计期间转换规则",
+        },
+        {
+          businessName:"手工导入报表数据",
+        }
+      ]
+    }]
+  },{
+    role:3,
+    nodeOperations:[{
+      nodeName:"EXCEL端录入单体数据",
+      business:[
+        {
+          businessName:"EXCEL端下载套表、录入单体数据",
+        }
+      ]
+    }]
+  },
+]
+},
+{
+  businessId:10,
+    processName:"单体公司数据中心",
+  steps:[
+  {
+    role:3,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"刷新单体公司数据",
+        },
+        {
+          businessName:"单体公司数据确认、审核、上报",
+        }
+      ]
+    }]
+  }]
+  },
+{
+  businessId:11,
+    processName:"外币报表折算",
+  steps:[
+  {
+    role:"",
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"单体公司调整后数据",
+        },
+      ]
+    }]
+  }]
+},
+  {
     businessId:12,
     processName:"内部交易对账",
     steps:[
       {
-        role:2,
+        role:3,
         nodeOperations:[{
           nodeName:"单体公司对账",
           business:[
@@ -170,7 +401,7 @@ var businessDetailData = [
         }]
       },
       {
-        role:3,
+        role:2,
         nodeOperations:[{
           nodeName:"合并体对账",
           business:[
@@ -188,7 +419,136 @@ var businessDetailData = [
       }
     ]
 
-  }
+  },
+{
+  businessId:13,
+    processName:"合并方案",
+  steps:[
+  {
+    role:2,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"创建合并方案",
+        },
+      ]
+    }]
+  }]
+},
+{
+  businessId:14,
+    processName:"合并流程定义",
+  steps:[
+  {
+    role:2,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"合并流程定义",
+        },
+      ]
+    }]
+  }]
+},
+{
+  businessId:15,
+    processName:"手工抵销",
+  steps:[
+  {
+    role:2,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"录入抵销分录",
+        },
+      ]
+    }]
+  }]
+},
+{
+  businessId:16,
+    processName:"手工调整",
+  steps:[
+  {
+    role:2,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"录入调整分录",
+        },
+      ]
+    }]
+  }]
+},
+{
+  businessId:17,
+    processName:"合并执行监控",
+    steps:[
+    {
+      role:2,
+      nodeOperations:[{
+        nodeName:"-",
+        business:[
+          {
+            businessName:"折算规则算法处理",
+          },{
+            businessName:"抵销规则算法处理",
+          },{
+            businessName:"调整规则算法处理",
+          },{
+            businessName:"审计线索维自动汇总处理",
+          },{
+            businessName:"单体报表上报状态监控",
+          },{
+            businessName:"合并过程监控",
+          },
+        ]
+      }]
+    }]
+},{
+  businessId:18,
+    processName:"合并数据中心",
+    steps:[
+    {
+      role:2,
+      nodeOperations:[{
+        nodeName:"-",
+        business:[
+          {
+            businessName:"查看合并表",
+          },{
+            businessName:"查看调整、合并工作底稿",
+          },{
+            businessName:"查看调整后数据",
+          },{
+            businessName:"查看单体公司上报数据",
+          },{
+            businessName:"查看单体公司净表数据",
+          }
+        ]
+      }]
+    }]
+},
+{
+  businessId:19,
+    processName:"权限设置",
+  steps:[
+  {
+    role:1,
+    nodeOperations:[{
+      nodeName:"-",
+      business:[
+        {
+          businessName:"",
+        }
+      ]
+    }]
+  }]
+},
 ]
 export  {
   businessOverviewData,

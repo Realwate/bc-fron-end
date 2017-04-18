@@ -10,12 +10,13 @@ import 'element-ui/lib/theme-default/index.css'
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 
-
 import config from "@/config"
+
+/* 图片地址增加baseurl */
 Vue.filter('addBaseUrl', function (path) {
   return config.baseUrl+path;
 })
-
+/* 图片名字过滤 */
 Vue.filter('imgNameFilter', function (fullName) {
   return fullName.substr(0,fullName.indexOf('.'));
 })

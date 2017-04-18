@@ -9,4 +9,7 @@ export default {
   changeDefaultActive({commit},active){
     commit("CHANGE_DEFAULT_ACTIVE",active);
   },
+  changeDefaultActive({commit},active){
+    commit("CHANGE_DEFAULT_ACTIVE",active);
+  },
 }

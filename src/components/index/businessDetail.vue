@@ -5,14 +5,16 @@
       border
       style="width: 100%">
       <el-table-column
-        label="步骤">
+        label="步骤"
+      width="250">
         <template scope="scope">
           <span>{{ scope.row.processName}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="role"
-        label="角色">
+        label="角色"
+        width="200">
         <template scope="scope">
             <span v-html="flag2Role(scope.row.role)"></span>
         </template>

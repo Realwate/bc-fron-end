@@ -93,7 +93,15 @@ let routes = [
 
 const router = new Router({
   routes,
-  mode:"history"
+  mode:"history",
+  scrollBehavior (to, from, savedPosition) {
+    // console.log("savedPosition",savedPosition);
+    if (savedPosition) {
+      return savedPosition; /* 默认记录了滚动的状态 */
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 });
 
 router.beforeEach((to, from, next) => {
