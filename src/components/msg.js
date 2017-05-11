@@ -5,7 +5,7 @@ function showMessage(content,type){
     message:content,
     type:type,
     showClose: true,
-    duration:1500
+    duration:2500
   })
 }
 function alertSuccess(msg){

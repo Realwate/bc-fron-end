@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <v-header></v-header>
-    <router-view>
-
-    </router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -11,9 +8,6 @@
   import '@/sass/animate.css'
   import '@/sass/style.css'
   import '@/sass/style.scss'
-
-  import vHeader from './components/header'
-
 
 
 export default {
@@ -24,10 +18,6 @@ export default {
   },
   methods:{
   },
-  components:{
-    vHeader,
-
-  }
 }
 </script>
 

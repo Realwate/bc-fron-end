@@ -2,7 +2,7 @@
     <aside>
       <el-menu router :default-active="defaultActive" class="el-menu-vertical-demo">
 
-        <el-menu-item :index="config.rootPath+'/main'">产品形态</el-menu-item>
+        <el-menu-item :index="config.rootPath+'/main/'">产品形态</el-menu-item>
         <el-menu-item :index="config.rootPath+'/main/mainProcess'">关键业务流程</el-menu-item>
         <el-menu-item :index="config.rootPath+'/main/user'">用户故事</el-menu-item>
         <el-menu-item :index="config.rootPath+'/main/testSystem'">测试系统</el-menu-item>

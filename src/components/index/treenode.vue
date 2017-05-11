@@ -1,6 +1,6 @@
 <template>
 
-  <div class="tree-node" @click="nodeOpsShow=!nodeOpsShow;">
+  <div class="tree-node" @click="nodeClick">
     <div class="node-label">
         <span>
             {{label}}
@@ -31,6 +31,10 @@
     },
     props:["label","hideEditButton","hideAddButton","hideDeleteButton"],
     methods: {
+        nodeClick(){
+          this.nodeOpsShow = !this.nodeOpsShow;
+          this.$emit("click");
+        },
         cancel(){
           this.isEditing = false;
         },

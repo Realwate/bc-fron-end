@@ -193,8 +193,13 @@ import config from '@/config'
           {classNames:["bg-green"],label:"完成"},
         ],
         tableData:  [],
+        isUpdateTable:false,
+        store:null,
+        rootNode:null,
+        clickedNodes:[],
         nodeInfo:[],
-        realTreeDataRef:new Map(),
+        allNodeInfoMap:new Map(),
+        allNodeDataMap:new Map(),
         dialogVisible:false,
         currentRow:{},
         toUpdateRow:{},
@@ -218,14 +223,14 @@ import config from '@/config'
               console.log("NODE初始化完成")
 
               //初始获取node ->改变Tree内部数据
-              // 渲染Tree -> 此时才修改this.realTreeDataRef
+              // 渲染Tree -> 此时才修改this.allNodeDataMap
               //发送addNode请求 -> 返回更新node ->
 //              this.$nextTick(()=>{
 //                this.nodeInfo.push({});
 //              });
               //添加node返回 更新本地数据， 触发watcher
-              //watcher试图根据realTreeDataRef更新tableData
-              //但是此时realTreeDataRef还未变化
+              //watcher试图根据allNodeDataMap更新tableData
+              //但是此时allNodeDataMap还未变化
             });
 
         }
@@ -233,6 +238,12 @@ import config from '@/config'
     computed:{
       currentProductId(){
           return this.$store.state.currentProductId;
+      },
+      currentNode(){
+          if(this.store != null){
+            return this.store.currentNode;
+          }
+
       }
     },
     created(){
@@ -249,12 +260,53 @@ import config from '@/config'
             this.nodeInfo = nodeInfoData;
           })
       },
-      nodeInfo(newInfo){
+      nodeInfo(newInfo){ //nodeInfo变化 更新tableData
 //          console.log("watch nodeInfo变化",newInfo)
-        this.updateTableData(newInfo);
-      }
+        for(let info of newInfo){ //更新nodeInfo Map
+          this.allNodeInfoMap.set(info.nodeid,info);
+        }
+
+//        this.updateTableData();
+        this.updateClickedNodes();
+      },
+      //点击的结点变化 更新clickedNodes
+      currentNode(newNode){
+          if(newNode == null){
+
+          }
+          //获取当前点击的所有结点
+        this.updateClickedNodes(newNode);
+
+      },
+
     },
     methods: {
+        updateClickedNodes(clickedNode){ //更新选中的所有结点
+
+          clickedNode = clickedNode || this.currentNode;
+//          if(clickedNode != null || clickedNode.data.isNew){ //新加的结点
+//            return;
+//          }
+          if(clickedNode == null){  //初始化选中节点为null
+             return;
+          }
+
+          let nodeArray = [];
+
+          function getAllNodes(curNode,array){
+            array.push(curNode);
+            if(curNode.childNodes.length > 0){
+              for(let node of curNode.childNodes){
+                getAllNodes(node,array);
+              }
+            }
+          }
+          getAllNodes(clickedNode,nodeArray);
+          console.log("选中的结点为",nodeArray);
+          this.clickedNodes = nodeArray;
+
+          this.updateTableData();
+        },
         //更新本地nodeInfo数据
         updateLocalNodeInfo(){
           api.getNodeInfoByProductId(this.currentProductId)
@@ -266,35 +318,44 @@ import config from '@/config'
               Msg.alertSuccess("更新成功")
             });
         },
-     //当数据 nodeinfo变化时 更新tableData
-      updateTableData(newInfo){
-            this.$nextTick(()=>{
-//            setTimeout(()=>{
-            newInfo = newInfo || this.nodeInfo;
-          if (!newInfo|| newInfo.length == 0 || this.realTreeDataRef.size <=1) {
-              this.tableData = [];
-            return;
-          }
-          console.log("更新tableData 此时map ",this.realTreeDataRef);
-          let data = [];
-          for (let info of newInfo) {
-            //获取结点信息
-            if (!info.nodeid) {
-              continue;
+     //根据选中的nodes 和全部nodeinfo 更新tableData
+      updateTableData(){
+            if(this.isUpdateTable){
+                return ;
             }
 
-            let secondLevel = this.realTreeDataRef.get(info.nodeid);
+            this.isUpdateTable = true;
+
+            this.$nextTick(()=>{
+
+              console.log("更新tableData 此时allNodeDataMap nodeInfoMap",
+                this.allNodeDataMap,this.allNodeInfoMap);
+
+          if(this.clickedNodes.length == 0){ //初始显示全部
+            this.allNodeDataMap.forEach((value,key)=>{
+              this.clickedNodes.push(value);
+            })
+          }
+
+          let data = [];
+          for (let node of this.clickedNodes) {
+
+              let info = this.allNodeInfoMap.get(node.data.id);
+              if(info == null){
+                  continue;
+              }
 //            console.log("secondLevel",secondLevel,"nodeinfo",info)
             let obj = {
               nodeinfo: info,
-              secondLevelNode: secondLevel.data,
-              firstLevelNode: secondLevel.parent.data,
-              module: secondLevel.parent.parent.data
+              secondLevelNode: node.data,
+              firstLevelNode: node.parent.data,
+              module: node.parent.parent.data
             }
             data.push(obj);
           }
           console.log("tableData更新", data)
           this.tableData = data;
+          this.isUpdateTable = false;
         });
       },
       flag2label:formatUtil.flag2label,
@@ -315,7 +376,8 @@ import config from '@/config'
           this.treeData = [{
             localId:99999,
             label:"全部",
-            children:remoteTreeData
+            children:remoteTreeData,
+            id:"99999"
           }];
 
         },
@@ -330,13 +392,24 @@ import config from '@/config'
         }, data);
       },
       remove(store, data) {
+
+        store.currentNode = this.rootNode;//删除后选中根节点 防止删除后还能显示
         store.remove(data);
-        this.realTreeDataRef.delete(data.id);
+        this.allNodeDataMap.delete(data.id);
       },
 
       //data为node的数据
       renderContent(h, { node, data, store }) {
-        this.realTreeDataRef.set(data.id,node);
+        this.allNodeDataMap.set(data.id,node);
+        if(this.store == null){
+            console.log("初始化store",store)
+            this.store = store;
+        }
+        if(node.data.id == "99999"){//根节点
+          this.store.currentNode = node;
+          this.rootNode = node;
+        }
+
         var props = {
           label:node.label
         }
@@ -364,6 +437,7 @@ import config from '@/config'
                           .then(({data:msg}) => {
                             if (!msg.error) {
                               this.remove(store, data);
+                              this.allNodeInfoMap.delete(data.id);
 
                               //删除一个结点重新获取数据
                               this.updateLocalNodeInfo();
@@ -373,6 +447,15 @@ import config from '@/config'
                     }
 
                 },
+//              "click":()=>{ //点击节点 对tableData数据处理
+//                if(data.isNew || this.currentClickedNode === node){
+//                    return;
+//                }
+//                this.currentClickedNode = node;
+//                //data.id为结点id undefind显示全部
+//
+//              },
+
               "add":()=>{
                 this.addHandle(store,data)
                 node.expanded = true;
