@@ -34,10 +34,11 @@
 
     created(){
       let documentId = this.$route.params.documentId;
-      api.getDocumentById(documentId)
-        .then(({data:msg})=>{
-            this.nodeLabel = msg.data.node.label;
-        })
+      this.nodeLabel  = this.$route.query.navTitle;
+//      api.getDocumentById(documentId)
+//        .then(({data:msg})=>{
+//            this.nodeLabel = msg.data.node.label;
+//        })
     }
   }
 </script>

@@ -56,7 +56,6 @@
     data(){
       return {
         isLoading:true,
-        nodeLabel:"",
         document:{},
         prototypeImgList:[],
         config
@@ -101,11 +100,10 @@
 
     created(){
       let documentId = this.$route.params.documentId;
+
       api.getDocumentById(documentId)
         .then(({data:msg})=>{
-
           this.isLoading = false;
-          this.nodeLabel = msg.data.node.label;
           this.document = msg.data.document;
           this.prototypeImgList = msg.data.prototypeImgList;
         })

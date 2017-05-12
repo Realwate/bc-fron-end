@@ -1,7 +1,7 @@
 <template>
 
   <div class="wrapper">
-    <router-link style="flex:0 0 auto;" :to="{path:`${config.rootPath}/index/userStory?navTitle=用户故事`}" class="btn bg-red">
+    <router-link style="flex:0 0 auto;" :to="{path:`${config.rootPath}/index/userStory?navTitle=用户故事`}" class="btn bg-blue">
       用户故事
     </router-link>
   </div>

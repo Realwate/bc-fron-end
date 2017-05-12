@@ -1,18 +1,26 @@
 <template>
   <div class="w">
 
-    <aside>
-      <div class="back-home-wrapper">
-        <el-tooltip content="回到首页" placement="left">
-        <i @click="backHome" class="iconfont back-home">&#xe602;</i>
-        </el-tooltip>
-      </div>
-      <div class="tree-wrapper">
-        <el-tree class="tree" :data="data" :props="defaultProps"
-                 :expand-on-click-node="false"
-                 @node-click="handleNodeClick"></el-tree>
-      </div>
-    </aside>
+    <header>
+      <i @click="showMenu = !showMenu;" class="iconfont icon menu">&#xe639;</i>
+    </header>
+
+    <transition  name="slide-fade">
+      <aside v-if="showMenu">
+        <div class="back-home-wrapper">
+          <i @click="backHome" class="iconfont icon back-home">&#xe602;</i>
+          <i @click="showMenu = !showMenu;" class="iconfont icon menu">&#xe646;</i>
+        </div>
+        <div class="tree-wrapper">
+          <el-tree class="tree" :data="data" :props="defaultProps"
+                   :expand-on-click-node="false"
+                   @node-click="handleNodeClick"
+                   highlight-current
+                   default-expand-all
+          ></el-tree>
+        </div>
+      </aside>
+    </transition>
     <div class="demo">
       <iframe ref="demo" name="demo" src="" frameborder="0">
       </iframe>
@@ -23,23 +31,12 @@
 <script>
   import api from "@/api"
   import config from "@/config"
-
+  import demoData from "./demoData"
   export default {
     data(){
       return {
-        data: [{
-          label: '一级 1',
-          src:'https://www.hao123.com/'
-        }, {
-          label: '一级 2',
-          children: [{
-            label: '二级 2-1',
-            children: [{
-              label: '三级 2-1-1',
-              src:'http://cn.bing.com/'
-            }]
-          }]
-        }],
+        showMenu:true,
+        data: demoData,
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -65,10 +62,17 @@
 
 <style scoped lang="scss">
   @import "../../sass/common.scss";
+  $aside-width:180px;
   .w{
     background: #fff;
     height:100vh;
     box-sizing: border-box;
+  }
+  header{
+    position: fixed;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
   }
   .tree-wrapper{
     padding-top: 30px;
@@ -77,25 +81,39 @@
     box-sizing: border-box;
   }
   aside{
-    width: 180px;
+    width: $aside-width;
+    position: fixed;
+    left: 0;
+    top: 0;
     float: left;
     padding: 10px;
     height: 100%;
     box-sizing: border-box;
+    background: #fff;
   }
   .back-home-wrapper{
     height: 30px;
     line-height: 30px;
     text-align: center;
+    padding:0 30px;
   }
-  .back-home{
-    font-size: 20px;
+  .icon{
+    font-size: 22px;
     cursor: pointer;
+
     &:hover{
-       font-size: 24px;
+       font-size: 26px;
        font-weight:500;
+       color: $dark-blue;
      }
   }
+  .back-home{
+    float: left;
+  }
+  .menu{
+    float: right;
+  }
+
   .tree{
     height: 100%;
   }
@@ -106,6 +124,16 @@
   iframe{
     width: 100%;
     height: 100%;
+  }
+
+  .slide-fade-enter-active {
+    transition: all .4s cubic-bezier(.69,.09,.42,1.15);
+  }
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-active {
+    transform: translateX($aside-width * (-1));
   }
 
 </style>

@@ -29,7 +29,7 @@
         nodeOpsShow:false
     }
     },
-    props:["label","hideEditButton","hideAddButton","hideDeleteButton"],
+    props:["node","label","hideEditButton","hideAddButton","hideDeleteButton"],
     methods: {
         nodeClick(){
           this.nodeOpsShow = !this.nodeOpsShow;

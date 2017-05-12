@@ -29,32 +29,30 @@
     <el-table
       :data="tableData"
       border
-      :default-sort = "{prop: 'module.label', order: 'ascending'}"
       stripe>
       <el-table-column
         label="模块"
         prop="module.label"
-        sortable
       >
       </el-table-column>
       <el-table-column
         label="一级节点"
-        sortable
         prop="firstLevelNode.label">
       </el-table-column>
       <el-table-column
         label="二级节点"
-        width="150px"
         prop="secondLevelNode.label">
         <template scope="scope">
-          <router-link :to= "config.rootPath+'/document/'+scope.row.nodeinfo.documentid">
+          <router-link :to= "config.rootPath+'/document/'+scope.row.nodeinfo.documentid +`?navTitle=${scope.row.secondLevelNode.label}`">
             {{scope.row.secondLevelNode.label}}
           </router-link>
+
         </template>
       </el-table-column>
       <el-table-column
         label="需求完成"
         sortable
+        width="120"
         prop="nodeinfo.requirementflag">
         <template scope="scope">
           <span :class="flag2Class(scope.row.nodeinfo.requirementflag)"></span>
@@ -63,6 +61,7 @@
       <el-table-column
         label="开发完成"
         sortable
+        width="120"
         prop="nodeinfo.developflag">
         <template scope="scope">
           <span :class="flag2Class(scope.row.nodeinfo.developflag)"></span>
@@ -71,6 +70,7 @@
       <el-table-column
         label="测试"
         sortable
+        width="120"
         prop="nodeinfo.testflag">
         <template scope="scope">
           <span :class="flag2Class(scope.row.nodeinfo.testflag)"></span>
@@ -221,16 +221,6 @@ import config from '@/config'
               this.nodeInfo = nodeInfoData;
               this.isLoading = false;
               console.log("NODE初始化完成")
-
-              //初始获取node ->改变Tree内部数据
-              // 渲染Tree -> 此时才修改this.allNodeDataMap
-              //发送addNode请求 -> 返回更新node ->
-//              this.$nextTick(()=>{
-//                this.nodeInfo.push({});
-//              });
-              //添加node返回 更新本地数据， 触发watcher
-              //watcher试图根据allNodeDataMap更新tableData
-              //但是此时allNodeDataMap还未变化
             });
 
         }
@@ -447,14 +437,6 @@ import config from '@/config'
                     }
 
                 },
-//              "click":()=>{ //点击节点 对tableData数据处理
-//                if(data.isNew || this.currentClickedNode === node){
-//                    return;
-//                }
-//                this.currentClickedNode = node;
-//                //data.id为结点id undefind显示全部
-//
-//              },
 
               "add":()=>{
                 this.addHandle(store,data)

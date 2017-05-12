@@ -43,6 +43,12 @@ export default{
   },
 
   /* nodeInfo */
+  addNodeInfo(nodeInfo){
+    return axios.post("/nodeInfo",nodeInfo);
+  },
+  deleteNodeInfo(id){
+    return axios.delete(`/nodeInfo/${id}`)
+  },
   updateNodeInfo(nodeInfo){
     return axios.put("/nodeInfo",nodeInfo);
   },
